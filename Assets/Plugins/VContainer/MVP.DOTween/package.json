@@ -1,0 +1,23 @@
+{
+	"name": "com.chikinov.vcontainer.mvp.dotween",
+	"displayName": "VContainer MVP DOTween Extension",
+	"version": "0.0.1",
+	"description": "DOTween extension for VContainer MVP",
+	"dependencies": {
+		"com.chikinov.vcontainer.mvp": "0.0.1",
+		"com.demigiant.dotween": "1.2.42"
+	},
+	"keywords": [
+		"dotween",
+		"mvp",
+		"model",
+		"view",
+		"presenter",
+		"vcontainer"
+	],
+	"author": {
+		"name": "Ken Lau",
+		"email": "chikinov@gmail.com",
+		"url": "https://github.com/chikinov"
+	}
+}

@@ -28,7 +28,10 @@ MonoBehaviour:
     m_Name: OpenUPM
     m_Url: https://package.openupm.com
     m_Scopes:
+    - com.cysharp.unitask
     - com.demigiant.dotween
+    - com.neuecc.unirx
+    - jp.hadashikick.vcontainer
     m_IsDefault: 0
     m_Capabilities: 0
   m_UserSelectedRegistryName: OpenUPM
@@ -40,12 +43,18 @@ MonoBehaviour:
       m_Name: OpenUPM
       m_Url: https://package.openupm.com
       m_Scopes:
+      - com.cysharp.unitask
       - com.demigiant.dotween
+      - com.neuecc.unirx
+      - jp.hadashikick.vcontainer
       m_IsDefault: 0
       m_Capabilities: 0
     m_Modified: 0
     m_Name: OpenUPM
     m_Url: https://package.openupm.com
     m_Scopes:
+    - com.cysharp.unitask
     - com.demigiant.dotween
+    - com.neuecc.unirx
+    - jp.hadashikick.vcontainer
     m_SelectedScopeIndex: 0
