@@ -211,22 +211,6 @@ namespace VContainer.Unity.MVP
             presenter.Initialize();
         }
 
-        public override IAnimation Show(bool animated = true)
-        {
-            var animation = base.Show(animated);
-
-            presenter.OnViewShow();
-
-            return animation;
-        }
-
-        public override IAnimation Hide(bool animated = true)
-        {
-            presenter.OnViewHide();
-
-            return base.Hide(animated);
-        }
-
         protected override void OnDestroy()
         {
             base.OnDestroy();

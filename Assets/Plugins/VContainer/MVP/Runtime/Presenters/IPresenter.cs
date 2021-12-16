@@ -10,8 +10,5 @@ namespace VContainer.Unity.MVP
         where TView : IView<TPresenter, TView>
         where TPresenter : IPresenter<TView, TPresenter>
     {
-        void OnViewShow();
-
-        void OnViewHide();
     }
 }

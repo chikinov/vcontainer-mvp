@@ -1,4 +1,5 @@
 using System;
+using UniRx;
 using UnityEngine;
 
 namespace VContainer.Unity.MVP
@@ -10,6 +11,18 @@ namespace VContainer.Unity.MVP
         Transform Transform { get; }
 
         bool IsVisible { get; set; }
+
+        IObservable<Unit> ObservePreShow();
+
+        IObservable<Unit> ObservePostShow();
+
+        IObservable<Unit> ObserveCompleteShow();
+
+        IObservable<Unit> ObservePreHide();
+
+        IObservable<Unit> ObservePostHide();
+
+        IObservable<Unit> ObserveCompleteHide();
 
         IAnimation Show(bool animated = true);
 

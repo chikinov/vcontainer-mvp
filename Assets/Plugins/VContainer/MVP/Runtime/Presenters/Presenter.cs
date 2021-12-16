@@ -1,3 +1,5 @@
+using UniRx;
+
 namespace VContainer.Unity.MVP
 {
     public abstract class Presenter<TView, TPresenter>
@@ -7,6 +9,8 @@ namespace VContainer.Unity.MVP
     {
         protected readonly TView view;
 
+        protected readonly CompositeDisposable disposables = new CompositeDisposable();
+
         [Inject]
         public Presenter(TView view)
         {
@@ -15,18 +19,36 @@ namespace VContainer.Unity.MVP
 
         public virtual void Initialize()
         {
+            view.ObservePreShow().Subscribe(
+                _ => OnViewPreShow()).AddTo(disposables);
+            view.ObservePostShow().Subscribe(
+                _ => OnViewPostShow()).AddTo(disposables);
+            view.ObserveCompleteShow().Subscribe(
+                _ => OnViewCompleteShow()).AddTo(disposables);
+
+            view.ObservePreHide().Subscribe(
+                _ => OnViewPreHide()).AddTo(disposables);
+            view.ObservePostHide().Subscribe(
+                _ => OnViewPostHide()).AddTo(disposables);
+            view.ObserveCompleteHide().Subscribe(
+                _ => OnViewCompleteHide()).AddTo(disposables);
         }
 
-        public virtual void OnViewShow()
-        {
-        }
+        protected virtual void OnViewPreShow() { }
 
-        public virtual void OnViewHide()
-        {
-        }
+        protected virtual void OnViewPostShow() { }
+
+        protected virtual void OnViewCompleteShow() { }
+
+        protected virtual void OnViewPreHide() { }
+
+        protected virtual void OnViewPostHide() { }
+
+        protected virtual void OnViewCompleteHide() { }
 
         public virtual void Dispose()
         {
+            disposables?.Dispose();
         }
     }
 }
