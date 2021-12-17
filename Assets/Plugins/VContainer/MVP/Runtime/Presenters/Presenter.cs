@@ -1,5 +1,3 @@
-using UniRx;
-
 namespace VContainer.Unity.MVP
 {
     public abstract class Presenter<TView, TPresenter>
@@ -9,8 +7,6 @@ namespace VContainer.Unity.MVP
     {
         protected readonly TView view;
 
-        protected readonly CompositeDisposable disposables = new CompositeDisposable();
-
         [Inject]
         public Presenter(TView view)
         {
@@ -19,36 +15,36 @@ namespace VContainer.Unity.MVP
 
         public virtual void Initialize()
         {
-            view.ObservePreShow().Subscribe(
-                _ => OnViewPreShow()).AddTo(disposables);
-            view.ObservePostShow().Subscribe(
-                _ => OnViewPostShow()).AddTo(disposables);
-            view.ObserveCompleteShow().Subscribe(
-                _ => OnViewCompleteShow()).AddTo(disposables);
+            view.PreShow.AddListener(PreShowView);
+            view.PostShow.AddListener(PostShowView);
+            view.OnCompleteShow.AddListener(OnCompleteShowView);
 
-            view.ObservePreHide().Subscribe(
-                _ => OnViewPreHide()).AddTo(disposables);
-            view.ObservePostHide().Subscribe(
-                _ => OnViewPostHide()).AddTo(disposables);
-            view.ObserveCompleteHide().Subscribe(
-                _ => OnViewCompleteHide()).AddTo(disposables);
+            view.PreHide.AddListener(PreHideView);
+            view.PostHide.AddListener(PostHideView);
+            view.OnCompleteHide.AddListener(OnCompleteHideView);
         }
 
-        protected virtual void OnViewPreShow() { }
+        protected virtual void PreShowView() { }
 
-        protected virtual void OnViewPostShow() { }
+        protected virtual void PostShowView() { }
 
-        protected virtual void OnViewCompleteShow() { }
+        protected virtual void OnCompleteShowView() { }
 
-        protected virtual void OnViewPreHide() { }
+        protected virtual void PreHideView() { }
 
-        protected virtual void OnViewPostHide() { }
+        protected virtual void PostHideView() { }
 
-        protected virtual void OnViewCompleteHide() { }
+        protected virtual void OnCompleteHideView() { }
 
         public virtual void Dispose()
         {
-            disposables?.Dispose();
+            view.PreShow.RemoveListener(PreShowView);
+            view.PostShow.RemoveListener(PreHideView);
+            view.OnCompleteShow.RemoveListener(OnCompleteShowView);
+
+            view.PreHide.RemoveListener(PreHideView);
+            view.PostHide.RemoveListener(PostHideView);
+            view.OnCompleteHide.RemoveListener(OnCompleteHideView);
         }
     }
 }

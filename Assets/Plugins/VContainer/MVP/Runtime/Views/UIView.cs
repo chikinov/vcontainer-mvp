@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace VContainer.Unity.MVP
@@ -85,27 +84,27 @@ namespace VContainer.Unity.MVP
             }
         }
 
-        private ISubject<Unit> preShow;
-        public IObservable<Unit> ObservePreShow() => preShow ??= new Subject<Unit>();
+        [field: SerializeField]
+        public UnityEvent PreShow { get; private set; }
 
-        private ISubject<Unit> postShow;
-        public IObservable<Unit> ObservePostShow() => postShow ??= new Subject<Unit>();
+        [field: SerializeField]
+        public UnityEvent PostShow { get; private set; }
 
-        private ISubject<Unit> completeShow;
-        public IObservable<Unit> ObserveCompleteShow() => completeShow ??= new Subject<Unit>();
+        [field: SerializeField]
+        public UnityEvent OnCompleteShow { get; private set; }
 
-        private ISubject<Unit> preHide;
-        public IObservable<Unit> ObservePreHide() => preHide ??= new Subject<Unit>();
+        [field: SerializeField]
+        public UnityEvent PreHide { get; private set; }
 
-        private ISubject<Unit> postHide;
-        public IObservable<Unit> ObservePostHide() => postHide ??= new Subject<Unit>();
+        [field: SerializeField]
+        public UnityEvent PostHide { get; private set; }
 
-        private ISubject<Unit> completeHide;
-        public IObservable<Unit> ObserveCompleteHide() => completeHide ??= new Subject<Unit>();
+        [field: SerializeField]
+        public UnityEvent OnCompleteHide { get; private set; }
 
         public virtual IAnimation Show(bool animated = true)
         {
-            preShow?.OnNext(Unit.Default);
+            PreShow?.Invoke();
 
             if (hideAnimation) hideAnimation.Stop();
 
@@ -116,10 +115,9 @@ namespace VContainer.Unity.MVP
             if (!showAnimation)
                 showAnimation = gameObject.AddComponent<DefaultAnimation>();
 
-            showAnimation.Play().OnComplete(
-                () => completeShow?.OnNext(Unit.Default));
+            showAnimation.Play().OnComplete(() => OnCompleteShow?.Invoke());
 
-            postShow?.OnNext(Unit.Default);
+            PostShow?.Invoke();
 
             if (!animated) showAnimation.Complete();
 
@@ -128,7 +126,7 @@ namespace VContainer.Unity.MVP
 
         public virtual IAnimation Hide(bool animated = true)
         {
-            preHide?.OnNext(Unit.Default);
+            PreHide?.Invoke();
 
             if (showAnimation) showAnimation.Stop();
 
@@ -142,10 +140,10 @@ namespace VContainer.Unity.MVP
                 {
                     IsVisible = false;
 
-                    completeHide?.OnNext(Unit.Default);
+                    OnCompleteHide?.Invoke();
                 });
 
-            postHide?.OnNext(Unit.Default);
+            PostHide?.Invoke();
 
             if (!animated) hideAnimation.Complete();
 

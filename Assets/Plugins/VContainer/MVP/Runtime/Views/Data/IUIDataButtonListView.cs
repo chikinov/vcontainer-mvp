@@ -1,4 +1,4 @@
-using System;
+using UnityEngine.Events;
 
 namespace VContainer.Unity.MVP
 {
@@ -6,6 +6,6 @@ namespace VContainer.Unity.MVP
         IDataListView<TData, TDataView>
         where TDataView : IUIDataButtonView<TData>
     {
-        public event EventHandler<UIDataView<TData>.EventArgs> OnClick;
+        UnityEvent<TData> OnClick { get; }
     }
 }

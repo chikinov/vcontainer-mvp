@@ -15,15 +15,5 @@ namespace VContainer.Unity.MVP
         }
 
         public abstract void Refresh();
-
-        public class EventArgs : System.EventArgs
-        {
-            public TData Data { get; private set; }
-
-            internal EventArgs(TData data)
-            {
-                Data = data;
-            }
-        }
     }
 }

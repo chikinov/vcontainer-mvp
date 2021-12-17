@@ -1,4 +1,5 @@
-using System;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace VContainer.Unity.MVP
 {
@@ -7,25 +8,24 @@ namespace VContainer.Unity.MVP
         IUIDataButtonListView<TData, TDataView>
         where TDataView : UIDataButtonView<TData>
     {
-        public event EventHandler<UIDataView<TData>.EventArgs> OnClick;
+        [field: SerializeField]
+        public UnityEvent<TData> OnClick { get; private set; }
 
         public override TDataView Add(TData data)
         {
             var view = base.Add(data);
-            view.OnClick += OnClickView;
+            view.OnClick.AddListener(OnClickView);
             return view;
         }
 
         public override void Clear()
         {
-            foreach (var child in children)
-                (child as TDataView).OnClick -= OnClickView;
+            foreach (TDataView child in children)
+                child.OnClick.RemoveListener(OnClickView);
 
             base.Clear();
         }
 
-        private void OnClickView(
-            object sender, UIDataView<TData>.EventArgs e) =>
-            OnClick?.Invoke(sender, e);
+        private void OnClickView(TData data) => OnClick?.Invoke(data);
     }
 }

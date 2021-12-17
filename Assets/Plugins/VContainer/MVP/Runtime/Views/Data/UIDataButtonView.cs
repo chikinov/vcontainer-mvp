@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace VContainer.Unity.MVP
@@ -9,7 +9,8 @@ namespace VContainer.Unity.MVP
     {
         [SerializeField] private Button button;
 
-        public event EventHandler<EventArgs> OnClick;
+        [field: SerializeField]
+        public UnityEvent<TData> OnClick { get; private set; }
 
         protected override void Awake()
         {
@@ -27,7 +28,6 @@ namespace VContainer.Unity.MVP
             if (button) button.onClick.RemoveListener(OnClickButton);
         }
 
-        private void OnClickButton() =>
-            OnClick?.Invoke(this, new EventArgs(Data));
+        private void OnClickButton() => OnClick?.Invoke(Data);
     }
 }

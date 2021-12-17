@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Events;
 
 namespace VContainer.Unity.MVP
 {
@@ -89,14 +89,14 @@ namespace VContainer.Unity.MVP
             alertDialog.PositiveText = positiveText;
             alertDialog.NegativeText = negativeText;
 
-            var disposables = new CompositeDisposable();
-            alertDialog.ObserveCompleteHide().Subscribe(
-                _ =>
+            UnityAction action = null;
+            action = new UnityAction(
+                () =>
                 {
-                    disposables.Dispose();
+                    alertDialog.OnCompleteHide.RemoveListener(action);
                     pool.Push(alertDialog);
-                })
-                .AddTo(disposables);
+                });
+            alertDialog.OnCompleteHide.AddListener(action);
 
             return alertDialog;
         }

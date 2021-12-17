@@ -1,9 +1,9 @@
-using System;
+using UnityEngine.Events;
 
 namespace VContainer.Unity.MVP
 {
     public interface IUIDataButtonView<TData> : IDataView<TData>
     {
-        public event EventHandler<UIDataView<TData>.EventArgs> OnClick;
+        UnityEvent<TData> OnClick { get; }
     }
 }

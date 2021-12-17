@@ -1,6 +1,6 @@
 using System;
-using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace VContainer.Unity.MVP
 {
@@ -12,17 +12,17 @@ namespace VContainer.Unity.MVP
 
         bool IsVisible { get; set; }
 
-        IObservable<Unit> ObservePreShow();
+        UnityEvent PreShow { get; }
 
-        IObservable<Unit> ObservePostShow();
+        UnityEvent PostShow { get; }
 
-        IObservable<Unit> ObserveCompleteShow();
+        UnityEvent OnCompleteShow { get; }
 
-        IObservable<Unit> ObservePreHide();
+        UnityEvent PreHide { get; }
 
-        IObservable<Unit> ObservePostHide();
+        UnityEvent PostHide { get; }
 
-        IObservable<Unit> ObserveCompleteHide();
+        UnityEvent OnCompleteHide { get; }
 
         IAnimation Show(bool animated = true);
 
