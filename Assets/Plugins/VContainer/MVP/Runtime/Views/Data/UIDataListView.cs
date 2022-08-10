@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.Pool;
 
 namespace VContainer.Unity.MVP
 {
